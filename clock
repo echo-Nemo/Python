@@ -83,7 +83,7 @@ def weekage(t):
 
 #显示月份
 def Danum(t):
-    Mou=['Jun','Feb','Mar','Apr','May'
+    Mou=['Jn','Feb','Mar','Apr','May'
          ,'June','July','Aug','Sep','Oct','Nov','Dece']
 
     j=t.year
