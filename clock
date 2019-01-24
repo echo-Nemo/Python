@@ -1,0 +1,135 @@
+##1个表外盘的turtle 3个指针tutrle 1个日期turtle
+
+from turtle import*
+from datetime import*
+#移动的函数    
+def skip(step):
+    penup()
+    forward(step)
+    pendown
+    
+ #指针的函数 名字和它们的长度 箭头的长度
+def mkHand(name,length):
+     reset()#清空当前窗口重置turtle
+    # skip(-length*0.1)
+     #记录多边形的起点 当前海龟的位置为第一个点
+     begin_poly()
+     forward(length*1.1)#指针的长度
+     #记录多边形的终点 海归的位置为最后一个点
+     end_poly()
+     #返回多边形的形状
+     handFrom=get_poly()
+     #指针的形状
+     register_shape(name,handFrom)
+
+#3个指针进行初始化
+#指针的 长度 形状 名称    
+def Init():
+    #3个turtle 分别记录 时 分秒针的形状
+    global HourHand,MinutHand,SecondHand,printer
+    mode("logo")
+    mkHand("HourHand",90)
+    mkHand("MinutHand",100)
+    mkHand("SecondHand",110)
+    
+    HourHand=Turtle()
+    HourHand.shape("HourHand")
+    HourHand.color("red")
+
+    MinutHand=Turtle() 
+    MinutHand.shape("MinutHand")
+    MinutHand.color("blue")
+    
+    SecondHand=Turtle()
+    SecondHand.shape("SecondHand")
+    SecondHand.color("gray")
+    
+    #指针的本身的宽度
+    for hand in HourHand,MinutHand,SecondHand:
+        hand.shapesize(3,1,1)
+        hand.speed(0)
+
+    #隐藏绘制的过程
+    printer=Turtle()
+    printer.hideturtle()
+    printer.pu()
+    
+ #表盘的外部   
+def SetupClock(radius):
+    reset()
+    pensize(8)
+    #总共60个点 每个点的偏转角度为6度
+    for i in range(60):
+        #确定表盘的半径
+        skip(radius)
+        #整点
+        if i%5==0:
+            #画了点之后 在后退回到原点f
+            forward(20)#整点的长度长些 所以要先前进25
+            dot(10)
+            skip(-radius-20)
+         #不是整点 就打点dot(r)半径为r  
+        else:
+            dot(5)
+            skip(-radius)
+        #每一个点偏转6度    
+        right(6)
+        
+#显示星期
+def weekage(t):
+    week=['MOnday','Tuesday','Wednesday','Thursday','Friday','Saturday'
+          ,'Sunday']
+    return week[t.weekday()]
+
+#显示月份
+def Danum(t):
+    Mou=['Jun','Feb','Mar','Apr','May'
+         ,'June','July','Aug','Sep','Oct','Nov','Dece']
+
+    j=t.year
+    m=Mou[t.month-1]#t.mouth返回当前的月份 它是一个数字
+    d=t.day
+    return "%s %d %d" %(m,d,j)
+
+#指针的动态转动
+def tick():
+    #t是当前的时间 包括 年 月日 等
+    t=datetime.today()
+    #分为60 时针加1 否则不加 依次到 时分秒针
+    secnude=t.second +t.microsecond*0.000001
+    minude=t.minute+secnude/60.0
+    houude=t.hour+minude/60.0
+    #每个指针应转的角度
+    SecondHand.setheading(secnude*6)
+    MinutHand.setheading(minude*6)
+    HourHand.setheading(houude*30)
+    #每个指针的位置 大小 颜色
+    tracer(False)#轨迹隐藏
+    #星期的位置
+    printer.forward(65)
+    #星期的时间
+    printer.write(weekage(t),align="center",font=("Courier",14,"bold"))
+    #后退 到写月份
+    printer.back(130)
+    printer.write(Danum(t),align="center",font=("Courier",14,"bold"))
+    #回到中心
+    printer.forward(65)
+    tracer(True)
+
+    #启动 tick 函数的频率 1000s
+    ontimer(tick,1000)
+    
+def main():
+    tracer(False)#使多个图型 都出现
+    Init()
+    SetupClock(160)
+    tracer(True)
+    tick()
+    mainloop()
+    return "OK"
+
+if __name__=="__main__":
+    main()
+     
+     
+        
