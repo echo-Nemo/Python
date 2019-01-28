@@ -1,0 +1,34 @@
+import turtle
+def CeHe(size,n): #size 曲线的长度 n表示阶
+    if n==0:
+        turtle.fd(size)#走一条直线
+    else:
+        for angle in [0,60,-120,60]:#right(120)=left(-120)=left(240)
+            turtle.left(angle)
+            CeHe(size/3,n-1)
+def Snow():
+    level=3
+    turtle.right(120)
+    CeHe(400,level)
+    turtle.right(120)
+    CeHe(400,level)
+    turtle.right(120)
+    CeHe(400,level)
+
+def main():
+    turtle.speed(0)
+    turtle.penup()
+    turtle.setup(600,600)
+    turtle.pendown()
+    turtle.pensize(2)
+    turtle.color("green")
+    turtle.hideturtle()
+    Snow()
+if __name__=="__main__" :
+    main()
+            
+        
+    
+
+
+ 
