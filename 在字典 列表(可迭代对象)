@@ -1,0 +1,2 @@
+a_list.sort(key=lambda x:x[0],reverse=True)
+#lanbda x:x[1] 根据第二个值(3) 排序 x[0]根据第一个值(well)排序 eg(well,3)
