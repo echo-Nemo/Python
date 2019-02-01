@@ -1,0 +1,38 @@
+import jieba
+def Text():
+    text=open(r'C:\Users\hp\Desktop\threekingdoms.txt','r',encoding="utf-8").read()
+    excute={'将军','却说','荆州','二人','不可','不能','如此','主公','如何','左右','商议','军马','引兵'}
+    a_text=jieba.lcut(text)
+    
+    count=dict()
+    for ch in a_text:
+        if len(ch)==1:
+            continue
+            #把标点符号去除:
+        
+        elif ch=="孔明曰" :
+             ch="诸葛亮"
+             
+        elif ch=="关公" or ch=="云长":
+            ch="关羽"
+            
+        elif ch=="玄德" or ch=="玄德曰":
+            ch="刘备"
+
+        elif ch=="孟德"or ch=="丞相" or ch=="丞相曰":
+             ch="曹操"
+             
+        else:
+            ch=ch
+        count[ch]=count.get(ch,0)+1#for i in a_text:  count[ch]=count.get(i,0)+1  for ch in a_text:中的内容没有更新
+    for i in excute:
+        del count[i]
+        #list(count)只把字典中的值转化为列表
+        #list(count.items())将键值对转化为列表
+    a_list=list(count.items())
+    a_list.sort(key=lambda x:x[1],reverse=True)
+    for i in range(10):
+        print(a_list[i])           
+Text()        
+
+
